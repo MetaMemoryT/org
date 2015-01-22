@@ -8,10 +8,10 @@
 # For more detailed documentation see
 # https://atom.io/docs/latest/advanced/keymaps
 '.workspace':
-  'ctrl-alt-o': 'org:toggle'
+  'alt-o': 'org:toggle'
 '.workspace .editor:not(.mini)':
-  'cmd-enter': 'org:insert-headline-empty-respect-content'
-  'cmd-shift-enter': 'org:insert-headline-todo-respect-content'
+  'ctrl-enter': 'org:insert-headline-empty-respect-content'
+  'alt-enter': 'org:insert-headline-todo-respect-content'
   'alt-right': 'org:demote-headline'
   'alt-left': 'org:promote-headline'
   'alt-shift-right': 'org:demote-tree'
