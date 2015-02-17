@@ -7,14 +7,12 @@
     'match': '(?<!\\w)@?TODO\\b'
     'name': 'org-todo'
   }
-{
-  'match': '(?<!\\w)@?NEXT\\b'
-  'name': 'org-next'
-}
-
-{
-  'match': '(?<!\\w)@?DONE\\b'
-  'name': 'org-done'
-}
-
+  {
+    'match': '(?<!\\w)@?NEXT\\b'
+    'name': 'org-next'
+  }
+  {
+    'match': '(?<!\\w)@?DONE\\b'
+    'name': 'org-done'
+  }
 ]

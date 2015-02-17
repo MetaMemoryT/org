@@ -5,32 +5,35 @@ OrgEditorHelpers = require './org-editor-helpers'
 module.exports =
 class OrgStructureEdit extends OrgEditorHelpers
   constructor: ->
-    atom.workspaceView.eachEditorView (editorView) =>
-      @setupCommands editorView
+    atom.workspace.observeTextEditors (editor) =>
+      @setupCommands editor
 
-  setupCommands: (editorView) =>
-    ed = editorView.getEditor()
-    editorView.command "org:insert-headline-empty-respect-content", (e) =>
-      @inOrgFile ed, e, @insertEmptyHeadline
-    editorView.command "org:insert-headline-todo-respect-content", (e) =>
-      @inOrgFile ed, e, @insertTodo
-    editorView.command "org:demote-headline", (e) =>
-      @inOrgFile ed, e, @demoteHeadline
-    editorView.command "org:promote-headline", (e) =>
-      @inOrgFile ed, e, @promoteHeadline
-    editorView.command "org:cycle-todo-forward", (e) =>
-      @inOrgFile ed, e, @cycleTodoForward
-    editorView.command "org:cycle-todo-backward", (e) =>
-      @inOrgFile ed, e, @cycleTodoBackward
-    editorView.command "org:demote-tree", (e) =>
-      @inOrgFile ed, e, @demoteTree
-    editorView.command "org:promote-tree", (e) =>
-      @inOrgFile ed, e, @promoteTree
+  commands: (ed) => [
+    ["org:insert-headline-empty-respect-content", (e) =>
+      @inOrgFile ed, e, @insertEmptyHeadline],
+    ["org:insert-headline-todo-respect-content", (e) =>
+      @inOrgFile ed, e, @insertTodo],
+    ["org:demote-headline", (e) =>
+      @inOrgFile ed, e, @demoteHeadline],
+    ["org:promote-headline", (e) =>
+      @inOrgFile ed, e, @promoteHeadline],
+    ["org:cycle-todo-forward", (e) =>
+      @inOrgFile ed, e, @cycleTodoForward],
+    ["org:cycle-todo-backward", (e) =>
+      @inOrgFile ed, e, @cycleTodoBackward],
+    ["org:demote-tree", (e) =>
+      @inOrgFile ed, e, @demoteTree],
+    ["org:promote-tree", (e) =>
+      @inOrgFile ed, e, @promoteTree],
+    ["org:move-tree-up", (e) =>
+      @inOrgFile ed, e, @moveTreeUp],
+    ["org:move-tree-down", (e) =>
+      @inOrgFile ed, e, @moveTreeDown]
+  ]
 
-    editorView.command "org:move-tree-up", (e) =>
-      @inOrgFile ed, e, @moveTreeUp
-    editorView.command "org:move-tree-down", (e) =>
-      @inOrgFile ed, e, @moveTreeDown
+  setupCommands: (ed) =>
+    for c in @commands(ed)
+      atom.commands.add "atom-text-editor", c[0], c[1]
 
   insertEmptyHeadline: (ed) =>
     @insertHeadlineWith '* ', ed, true
