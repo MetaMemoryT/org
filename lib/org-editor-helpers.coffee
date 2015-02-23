@@ -2,9 +2,8 @@
 
 module.exports =
 class OrgEditorHelpers
-  inOrgFile: (ed, e, fn) =>
-    uri = ed.getBuffer().getUri()
-    if (uri.endsWith('.org'))
+  inOrgFile: (ed, e, fn) ->
+    if (ed.buffer.file.path.endsWith('.org'))
       fn(ed)
     else
       e.abortKeyBinding()
@@ -13,10 +12,10 @@ class OrgEditorHelpers
     row = @getCurrentRow ed
     return @getLineAtRow ed, row
 
-  getLineAtRow: (ed, row) =>
+  getLineAtRow: (ed, row) ->
     return ed.getBuffer().lineForRow(row)
 
-  getCurrentRow: (ed) =>
+  getCurrentRow: (ed) ->
     return ed.getCursor().getBufferRow()
 
   replaceCurrentLine: (ed, line) =>
@@ -37,12 +36,12 @@ class OrgEditorHelpers
     pos = @getCursorPosition ed
     @setCursorPosition ed, row, pos.column
 
-  setCursorPosition: (ed, row, column) =>
+  setCursorPosition: (ed, row, column) ->
     ed.getCursor().setBufferPosition(new Point(row, column))
 
-  getCursorPosition: (ed) =>
+  getCursorPosition: (ed) ->
     return ed.getCursor().getBufferPosition()
 
-  destroy: =>
+  destroy: ->
 
   serialize: ->

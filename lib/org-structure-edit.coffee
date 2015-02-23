@@ -67,20 +67,21 @@ class OrgStructureEdit extends OrgEditorHelpers
     indent = ed.indentationForBufferRow row
     ed.selectLine
     lastRow = ed.getBuffer().getLastRow()
-    while (row==startRow or (row <lastRow and ed.indentationForBufferRow(row) > indent))
+    while (row == startRow or
+              (row < lastRow and ed.indentationForBufferRow(row) > indent))
       lines.push @getLineAtRow ed, row
-      row++;
+      row++
       ed.selectDown 1
     ed.cutSelectedText()
 
     row = startRow
-    insertionRow = - 1
+    insertionRow = -1
     while (row < lastRow)
       if ed.indentationForBufferRow(row) < indent
         break
       if insertionRow!=-1 and ed.indentationForBufferRow(row) == indent
         break
-      if insertionRow==-1 and ed.indentationForBufferRow(row) == indent
+      if insertionRow == -1 and ed.indentationForBufferRow(row) == indent
         insertionRow = row + 1
       if insertionRow!=-1 and ed.indentationForBufferRow(row) > indent
         insertionRow = row + 1
@@ -108,27 +109,28 @@ class OrgStructureEdit extends OrgEditorHelpers
     indent = ed.indentationForBufferRow row
     ed.selectLine
     lastRow = ed.getBuffer().getLastRow()
-    while (row==startRow or (row <lastRow and ed.indentationForBufferRow(row) > indent))
+    while (row == startRow or
+            (row < lastRow and ed.indentationForBufferRow(row) > indent))
       lines.push @getLineAtRow ed, row
-      row++;
+      row++
       ed.selectDown 1
 
     ed.cutSelectedText()
 
     row = startRow - 1
-    insertionRow = - 1
+    insertionRow = -1
     while (row >= 0)
       if ed.indentationForBufferRow(row) < indent
         break
       if insertionRow!=-1 and ed.indentationForBufferRow(row) == indent
         break
-      if insertionRow==-1 and ed.indentationForBufferRow(row) == indent
+      if insertionRow == -1 and ed.indentationForBufferRow(row) == indent
         insertionRow = row
       if insertionRow!=-1 and ed.indentationForBufferRow(row) > indent
         insertionRow = row
       row--
 
-    if (insertionRow == -1)
+    if (insertionRow == - 1)
       insertionRow = startRow
 
     @setCurrentRow ed, insertionRow
@@ -140,13 +142,13 @@ class OrgStructureEdit extends OrgEditorHelpers
     @setCurrentRow ed, finalRow
 
   insertHeadlineWith: (prefix, ed, respectContent) =>
-    if (respectContent==true)
+    if (respectContent == true)
       ed.moveCursorToEndOfLine()
     row = @getCurrentRow(ed)
     indent = ed.indentationForBufferRow(row)
     ed.insertNewline()
     ed.insertText(prefix)
-    ed.setIndentationForBufferRow(row+1, indent)
+    ed.setIndentationForBufferRow(row + 1, indent)
 
   indentCurrentLine: (ed, value) =>
     row = @getCurrentRow(ed)
@@ -156,16 +158,16 @@ class OrgStructureEdit extends OrgEditorHelpers
     row = @getCurrentRow
     buffer = ed.getBuffer()
     indent = ed.indentationForBufferRow(row)
-    for i in [row+1 .. buffer.getLastRow()] by 1
+    for i in [row + 1 .. buffer.getLastRow() ] by 1
       if (indent > 0 || value > 0) and ed.indentationForBufferRow(i) > indent
         @indentLine(ed, i, value)
       else
         break
     @indentCurrentLine(ed, value)
 
-  indentLine: (ed, row, value) =>
+  indentLine: (ed, row, value) ->
     newIndent = ed.indentationForBufferRow(row) + value
-    if newIndent>=0
+    if newIndent >= 0
       ed.setIndentationForBufferRow row, newIndent
 
   cycleTodo: (ed, direction) =>
@@ -174,12 +176,12 @@ class OrgStructureEdit extends OrgEditorHelpers
     for i in [0..keywords.length] by 1
       kw = keywords[i]
       if (line.indexOf(kw) != -1)
-        nextIndex = (i+direction)%keywords.length
-        if (nextIndex<0)
-          nextIndex = keywords.length-1
+        nextIndex = (i + direction) %keywords.length
+        if (nextIndex < 0)
+          nextIndex = keywords.length - 1
         nextKW = keywords[nextIndex]
         @replaceCurrentLine ed, line.replace "* " + kw, '* ' + nextKW
 
-  destroy: =>
+  destroy: ->
 
   serialize: ->
