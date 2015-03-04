@@ -16,7 +16,7 @@ class OrgEditorHelpers
     return ed.getBuffer().lineForRow(row)
 
   getCurrentRow: (ed) ->
-    return ed.getCursor().getBufferRow()
+    return ed.getLastCursor().getBufferRow()
 
   replaceCurrentLine: (ed, line) =>
     pos = @getCursorPosition ed
