@@ -3,7 +3,9 @@
 module.exports =
 class OrgEditorHelpers
   inOrgFile: (ed, e, fn) ->
-    if (ed.buffer.file.path.endsWith('.org'))
+    # sometimes file is null
+    if (ed.buffer.file &&
+        ed.buffer.file.path.endsWith('.org'))
       fn(ed)
     else
       e.abortKeyBinding()
