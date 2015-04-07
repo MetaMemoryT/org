@@ -3,7 +3,9 @@
 module.exports =
 class OrgEditorHelpers
   inOrgFile: (ed, e, fn) ->
-    if (ed.buffer.file.path.endsWith('.org'))
+    # sometimes file is null
+    if (ed.buffer.file &&
+        ed.buffer.file.path.endsWith('.org'))
       fn(ed)
     else
       e.abortKeyBinding()
@@ -18,11 +20,11 @@ class OrgEditorHelpers
   getCurrentRow: (ed) ->
     return ed.getLastCursor().getBufferRow()
 
-  replaceCurrentLine: (ed, line) =>
-    pos = @getCursorPosition ed
+  replaceCurrentLine: (ed, line) ->
+    point = ed.getLastCursor().getBufferPosition()
     ed.selectLine()
     ed.insertText line + '\n'
-    @setCursorPosition ed, pos.row, pos.column
+    ed.getLastCursor().setBufferPosition(point)
 
   moveCursorUp: (ed) =>
     row = @getCurrentRow ed
