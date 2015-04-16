@@ -144,8 +144,12 @@ class OrgStructureEdit extends OrgEditorHelpers
   insertHeadlineWith: (prefix, ed, respectContent) =>
     if (respectContent == true)
       ed.moveCursorToEndOfLine()
-    row = @getCurrentRow(ed)
-    indent = ed.indentationForBufferRow(row)
+    # NOTE: sometimes getLastCursor is undefined
+    if ed.getLastCursor()
+      row = @getCurrentRow(ed)
+      indent = ed.indentationForBufferRow(row)
+    else
+      indent = 0
     ed.insertNewline()
     ed.insertText(prefix)
     ed.setIndentationForBufferRow(row + 1, indent)
