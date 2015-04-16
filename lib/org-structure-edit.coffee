@@ -148,11 +148,14 @@ class OrgStructureEdit extends OrgEditorHelpers
     if ed.getLastCursor()
       row = @getCurrentRow(ed)
       indent = ed.indentationForBufferRow(row)
+      @insertHeadlineText(prefix, ed)
+      ed.setIndentationForBufferRow(row + 1, indent)
     else
-      indent = 0
+      @insertHeadlineText(prefix, ed)
+
+  insertHeadlineText: (prefix, ed) ->
     ed.insertNewline()
     ed.insertText(prefix)
-    ed.setIndentationForBufferRow(row + 1, indent)
 
   indentCurrentLine: (ed, value) =>
     row = @getCurrentRow(ed)
