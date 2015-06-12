@@ -143,7 +143,7 @@ class OrgStructureEdit extends OrgEditorHelpers
 
   insertHeadlineWith: (prefix, ed, respectContent) =>
     if (respectContent == true)
-      ed.moveCursorToEndOfLine()
+      ed.moveToEndOfLine()
     # NOTE: sometimes getLastCursor is undefined
     if ed.getLastCursor()
       row = @getCurrentRow(ed)
