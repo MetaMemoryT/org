@@ -1,9 +1,9 @@
 module.exports =
 class OrgTyping
-  constructor: (editor)->
+  constructor: (editor) ->
     @editor = editor
     @possibleTodo = ''
-    editor.getBuffer().on "changed", (event) =>
+    editor.getBuffer().onDidChange (event) =>
       @onBufferChanged(editor, event)
 
   onBufferChanged: (editor, event) =>

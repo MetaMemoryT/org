@@ -22,8 +22,9 @@ class OrgEditorHelpers
 
   replaceCurrentLine: (ed, line) ->
     point = ed.getLastCursor().getBufferPosition()
-    ed.selectLine()
-    ed.insertText line + '\n'
+    ed.moveToBeginningOfLine()
+    ed.selectToEndOfLine()
+    ed.insertText line
     ed.getLastCursor().setBufferPosition(point)
 
   moveCursorUp: (ed) =>

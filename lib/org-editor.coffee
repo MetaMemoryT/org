@@ -3,18 +3,19 @@ OrgTyping = require './org-typing'
 module.exports =
 class OrgEditor
   constructor: ->
-    @editorViewsWithOrg = []
+    @editorsWithOrg = []
 
-    atom.workspaceView.eachEditorView (editorView) =>
-      @setupEditor editorView
-      editorView.getEditor().getBuffer().on "saved", (event) =>
-        @setupEditor editorView
+    atom.workspace.observeTextEditors (editor) =>
+      ed = editor
+      @setupEditor editor
+      editor.onDidSave (event) =>
+        @setupEditor ed
 
-  setupEditor: (editorView) =>
-    ed = editorView.getEditor()
+  setupEditor: (editor) =>
+    ed = editor
     uri = ed.getBuffer().getUri()
-    if (@editorViewsWithOrg[editorView.id]!=1 and uri and uri.endsWith('.org'))
-      @editorViewsWithOrg[editorView.id] = 1
+    if (@editorsWithOrg[editor.id]!=1 and uri and uri.endsWith('.org'))
+      @editorsWithOrg[editor.id] = 1
       ed.setSoftTabs true
       ed.setTabLength 2
       @typing = new OrgTyping(ed)
