@@ -40,10 +40,10 @@ class OrgEditorHelpers
     @setCursorPosition ed, row, pos.column
 
   setCursorPosition: (ed, row, column) ->
-    ed.getCursor().setBufferPosition(new Point(row, column))
+    ed.setCursorBufferPosition(new Point(row, column))
 
   getCursorPosition: (ed) ->
-    return ed.getCursor().getBufferPosition()
+    return ed.getCursorBufferPosition()
 
   destroy: ->
 
